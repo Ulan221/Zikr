@@ -9,6 +9,11 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            /* Добавляем фоновое изображение */
+            background-image: url('background.jpg'); /* Замените на путь к вашему изображению */
+            background-size: contain; /* Покрытие всего фона */
+            background-position: center; /* Центрирование изображения */
+            background-repeat: no-repeat; /* Без повторения изображения */
         }
 
         .button-container {
@@ -25,34 +30,34 @@
     </style>
 </head>
 <body>
-    <h1>Zikr Counter</h1>
-    <p>Balance: <span id="balance">0</span></p>
-    <div class="button-container">
-        <button onclick="increment()">Subhanallah</button>
-        <button onclick="increment()">Alhamdulillah</button>
-        <button onclick="increment()">Allahu akbar</button>
-    </div>
+<h1>Zikr Counter</h1>
+<p>Balance: <span id="balance">0</span></p>
+<div class="button-container">
+    <button onclick="increment()">Subhanallah</button>
+    <button onclick="increment()">Alhamdulillah</button>
+    <button onclick="increment()">Allahu akbar</button>
+</div>
 
-    <script>
-        // Функция для получения значения баланса из Local Storage
-        function getBalance() {
-            return parseInt(localStorage.getItem('balance')) || 0;
-        }
+<script>
+    // Функция для получения значения баланса из Local Storage
+    function getBalance() {
+        return parseInt(localStorage.getItem('balance')) || 0;
+    }
 
-        // Функция для установки значения баланса в Local Storage
-        function setBalance(value) {
-            localStorage.setItem('balance', value);
-        }
+    // Функция для установки значения баланса в Local Storage
+    function setBalance(value) {
+        localStorage.setItem('balance', value);
+    }
 
-        // Инициализация баланса при загрузке страницы
-        let balance = getBalance();
+    // Инициализация баланса при загрузке страницы
+    let balance = getBalance();
+    document.getElementById('balance').innerText = balance;
+
+    function increment() {
+        balance++;
         document.getElementById('balance').innerText = balance;
-
-        function increment() {
-            balance++;
-            document.getElementById('balance').innerText = balance;
-            setBalance(balance); // Сохранение обновленного баланса в Local Storage
-        }
-    </script>
+        setBalance(balance); // Сохранение обновленного баланса в Local Storage
+    }
+</script>
 </body>
 </html>
