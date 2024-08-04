@@ -10,15 +10,17 @@
             text-align: center;
             margin-top: 50px;
         }
+
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение кнопок */
+            gap: 10px; /* Расстояние между кнопками */
+            align-items: center; /* Выравнивание кнопок по центру */
+        }
+
         button {
             font-size: 20px;
             padding: 10px 20px;
-            margin: 5px;
-        }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
     </style>
 </head>
@@ -26,19 +28,19 @@
     <h1>Zikr Counter</h1>
     <p>Balance: <span id="balance">0</span></p>
     <div class="button-container">
-        <button onclick="increment('Subhanallah')">Subhanallah</button>
-        <button onclick="increment('Alhamdulillah')">Alhamdulillah</button>
-        <button onclick="increment('Allahu akbar')">Allahu akbar</button>
+        <button onclick="increment()">Subhanallah</button>
+        <button onclick="increment()">Alhamdulillah</button>
+        <button onclick="increment()">Allahu akbar</button>
     </div>
 
     <script>
         let balance = 0;
-        function increment(phrase) {
+        function increment() {
             balance++;
             document.getElementById('balance').innerText = balance;
-            console.log(`Button clicked: ${phrase}`);
         }
     </script>
 </body>
 </html>
+
 
