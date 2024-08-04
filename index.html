@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotCoin Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Zikr counter</h1>
+<p>Balance: <span id="balance">0</span></p>
+<button onclick="increment()">Subhanallah</button>
+<button onclick="increment()">Alhamdulillah</button>
+<button onclick="increment()">Allahu akbar</button>
+
+<script>
+    let balance = 0;
+    function increment() {
+        balance++;
+        document.getElementById('balance').innerText = balance;
+    }
+</script>
+</body>
+</html>
