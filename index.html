@@ -8,53 +8,143 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
-            background: linear-gradient(to right, #087cf8, #b4d0f3);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* Пример градиента фона */
+            overflow: hidden; /* Убирает прокрутку при свайпе */
         }
 
-        .button-container {
+        .container {
             display: flex;
-            flex-direction: column; /* Вертикальное расположение кнопок */
-            gap: 10px; /* Расстояние между кнопками */
-            align-items: center; /* Выравнивание кнопок по центру */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Скрывает любые элементы, выходящие за пределы контейнера */
         }
 
-        button {
-            font-size: 20px;
+        .title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .balance {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .bead-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 10px; /* Расстояние между кнопками */
+            position: relative;
+            width: 80%;
+            overflow: hidden; /* Скрывает элементы, выходящие за пределы */
+        }
+
+        .bead {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
             padding: 10px 20px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            user-select: none; /* Отключает выделение текста */
+        }
+
+        .bead:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-<h1>Zikr Counter</h1>
-<p>Balance: <span id="balance">0</span></p>
-<div class="button-container">
-    <button onclick="increment()">Subhanallah</button>
-    <button onclick="increment()">Alhamdulillah</button>
-    <button onclick="increment()">Allahu akbar</button>
-</div>
+    <div class="container">
+        <div class="title">Zikr Counter</div>
+        <div class="balance">Balance: <span id="balance">0</span></div>
+        <div class="bead-wrapper" id="beadWrapper">
+            <button class="bead">Subhanallah</button>
+            <button class="bead">Alhamdulillah</button>
+            <button class="bead">Allahu akbar</button>
+        </div>
+    </div>
 
-<script>
-    // Функция для получения значения баланса из Local Storage
-    function getBalance() {
-        return parseInt(localStorage.getItem('balance')) || 0;
-    }
+    <script>
+        // Функция для получения значения баланса из Local Storage
+        function getBalance() {
+            return parseInt(localStorage.getItem('balance')) || 0;
+        }
 
-    // Функция для установки значения баланса в Local Storage
-    function setBalance(value) {
-        localStorage.setItem('balance', value);
-    }
+        // Функция для установки значения баланса в Local Storage
+        function setBalance(value) {
+            localStorage.setItem('balance', value);
+        }
 
-    // Инициализация баланса при загрузке страницы
-    let balance = getBalance();
-    document.getElementById('balance').innerText = balance;
-
-    function increment() {
-        balance++;
+        // Инициализация баланса при загрузке страницы
+        let balance = getBalance();
         document.getElementById('balance').innerText = balance;
-        setBalance(balance); // Сохранение обновленного баланса в Local Storage
-    }
-</script>
+
+        function increment() {
+            balance++;
+            document.getElementById('balance').innerText = balance;
+            setBalance(balance); // Сохранение обновленного баланса в Local Storage
+        }
+
+        const beadWrapper = document.getElementById('beadWrapper');
+        let startX, currentX, initialX;
+
+        beadWrapper.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            initialX = beadWrapper.getBoundingClientRect().left;
+            beadWrapper.style.transition = 'none'; // Отключаем плавное перемещение
+        });
+
+        beadWrapper.addEventListener('mousemove', (e) => {
+            if (startX !== undefined) {
+                currentX = e.clientX - startX;
+                beadWrapper.style.transform = `translateX(${currentX}px)`;
+            }
+        });
+
+        beadWrapper.addEventListener('mouseup', () => {
+            beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
+            beadWrapper.style.transform = 'translateX(0px)';
+            startX = undefined;
+        });
+
+        beadWrapper.addEventListener('mouseleave', () => {
+            if (startX !== undefined) {
+                beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
+                beadWrapper.style.transform = 'translateX(0px)';
+                startX = undefined;
+            }
+        });
+
+        beadWrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            initialX = beadWrapper.getBoundingClientRect().left;
+            beadWrapper.style.transition = 'none'; // Отключаем плавное перемещение
+        });
+
+        beadWrapper.addEventListener('touchmove', (e) => {
+            if (startX !== undefined) {
+                currentX = e.touches[0].clientX - startX;
+                beadWrapper.style.transform = `translateX(${currentX}px)`;
+            }
+        });
+
+        beadWrapper.addEventListener('touchend', () => {
+            beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
+            beadWrapper.style.transform = 'translateX(0px)';
+            startX = undefined;
+        });
+
+        // Привязка функции к кнопкам
+        document.querySelectorAll('.bead').forEach(button => {
+            button.addEventListener('click', increment);
+        });
+    </script>
 </body>
 </html>
-
