@@ -10,8 +10,8 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* Пример градиента фона */
-            overflow: hidden; /* Убирает прокрутку при свайпе */
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* Градиент фона */
+            overflow: hidden; /* Убирает прокрутку */
         }
 
         .container {
@@ -20,43 +20,54 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden; /* Скрывает любые элементы, выходящие за пределы контейнера */
+            overflow: hidden;
         }
 
         .title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            color: #333;
         }
 
         .balance {
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 30px;
+            color: #333;
         }
 
-        .bead-wrapper {
+        .carousel {
             display: flex;
             flex-direction: row;
-            gap: 10px; /* Расстояние между кнопками */
-            position: relative;
-            width: 80%;
-            overflow: hidden; /* Скрывает элементы, выходящие за пределы */
+            gap: 15px;
+            overflow-x: auto; /* Позволяет прокручивать кнопки горизонтально */
+            padding: 10px;
+            scroll-behavior: smooth; /* Плавная прокрутка */
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none; /* Скрывает полосу прокрутки в браузерах WebKit */
         }
 
         .bead {
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             font-size: 18px;
-            padding: 10px 20px;
+            padding: 15px 25px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            user-select: none; /* Отключает выделение текста */
+            user-select: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопок */
         }
 
         .bead:hover {
-            background-color: #0056b3;
+            background-color: #218838;
             transform: scale(1.1);
+        }
+
+        .bead:active {
+            background-color: #1e7e34;
         }
     </style>
 </head>
@@ -64,7 +75,7 @@
     <div class="container">
         <div class="title">Zikr Counter</div>
         <div class="balance">Balance: <span id="balance">0</span></div>
-        <div class="bead-wrapper" id="beadWrapper">
+        <div class="carousel">
             <button class="bead">Subhanallah</button>
             <button class="bead">Alhamdulillah</button>
             <button class="bead">Allahu akbar</button>
@@ -92,55 +103,6 @@
             setBalance(balance); // Сохранение обновленного баланса в Local Storage
         }
 
-        const beadWrapper = document.getElementById('beadWrapper');
-        let startX, currentX, initialX;
-
-        beadWrapper.addEventListener('mousedown', (e) => {
-            startX = e.clientX;
-            initialX = beadWrapper.getBoundingClientRect().left;
-            beadWrapper.style.transition = 'none'; // Отключаем плавное перемещение
-        });
-
-        beadWrapper.addEventListener('mousemove', (e) => {
-            if (startX !== undefined) {
-                currentX = e.clientX - startX;
-                beadWrapper.style.transform = `translateX(${currentX}px)`;
-            }
-        });
-
-        beadWrapper.addEventListener('mouseup', () => {
-            beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
-            beadWrapper.style.transform = 'translateX(0px)';
-            startX = undefined;
-        });
-
-        beadWrapper.addEventListener('mouseleave', () => {
-            if (startX !== undefined) {
-                beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
-                beadWrapper.style.transform = 'translateX(0px)';
-                startX = undefined;
-            }
-        });
-
-        beadWrapper.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            initialX = beadWrapper.getBoundingClientRect().left;
-            beadWrapper.style.transition = 'none'; // Отключаем плавное перемещение
-        });
-
-        beadWrapper.addEventListener('touchmove', (e) => {
-            if (startX !== undefined) {
-                currentX = e.touches[0].clientX - startX;
-                beadWrapper.style.transform = `translateX(${currentX}px)`;
-            }
-        });
-
-        beadWrapper.addEventListener('touchend', () => {
-            beadWrapper.style.transition = 'transform 0.3s ease'; // Включаем плавное перемещение
-            beadWrapper.style.transform = 'translateX(0px)';
-            startX = undefined;
-        });
-
         // Привязка функции к кнопкам
         document.querySelectorAll('.bead').forEach(button => {
             button.addEventListener('click', increment);
@@ -148,3 +110,4 @@
     </script>
 </body>
 </html>
+
