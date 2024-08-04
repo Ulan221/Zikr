@@ -34,13 +34,25 @@
     </div>
 
     <script>
-        let balance = 0;
+        // Функция для получения значения баланса из Local Storage
+        function getBalance() {
+            return parseInt(localStorage.getItem('balance')) || 0;
+        }
+
+        // Функция для установки значения баланса в Local Storage
+        function setBalance(value) {
+            localStorage.setItem('balance', value);
+        }
+
+        // Инициализация баланса при загрузке страницы
+        let balance = getBalance();
+        document.getElementById('balance').innerText = balance;
+
         function increment() {
             balance++;
             document.getElementById('balance').innerText = balance;
+            setBalance(balance); // Сохранение обновленного баланса в Local Storage
         }
     </script>
 </body>
 </html>
-
-
