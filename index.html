@@ -20,7 +20,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
         }
 
         .title {
@@ -30,84 +29,73 @@
         }
 
         .balance {
-            font-size: 2rem;
-            margin-bottom: 30px;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
             color: #333;
         }
 
-        .carousel {
+        .button-container {
+            position: absolute;
+            bottom: 20px;
             display: flex;
             flex-direction: row;
-            gap: 15px;
-            overflow-x: auto; /* Позволяет прокручивать кнопки горизонтально */
-            padding: 10px;
-            scroll-behavior: smooth; /* Плавная прокрутка */
+            gap: 10px; /* Расстояние между кнопками */
+            align-items: center; /* Выравнивание кнопок по центру */
+            justify-content: center;
+            width: 100%;
         }
 
-        .carousel::-webkit-scrollbar {
-            display: none; /* Скрывает полосу прокрутки в браузерах WebKit */
-        }
-
-        .bead {
-            background-color: #28a745;
+        button {
+            font-size: 16px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
             color: white;
-            font-size: 18px;
-            padding: 15px 25px;
             border: none;
-            border-radius: 50%;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            user-select: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопок */
+            transition: background-color 0.3s;
         }
 
-        .bead:hover {
-            background-color: #218838;
-            transform: scale(1.1);
+        button:hover {
+            background-color: #45a049;
         }
 
-        .bead:active {
-            background-color: #1e7e34;
+        button:active {
+            background-color: #3e8e41;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">Zikr Counter</div>
-        <div class="balance">Balance: <span id="balance">0</span></div>
-        <div class="carousel">
-            <button class="bead">Subhanallah</button>
-            <button class="bead">Alhamdulillah</button>
-            <button class="bead">Allahu akbar</button>
-        </div>
-    </div>
+<div class="container">
+    <h1 class="title">Zikr Counter</h1>
+    <p class="balance">Balance: <span id="balance">0</span></p>
+</div>
+<div class="button-container">
+    <button onclick="increment()">Subhanallah</button>
+    <button onclick="increment()">Alhamdulillah</button>
+    <button onclick="increment()">Allahu akbar</button>
+</div>
 
-    <script>
-        // Функция для получения значения баланса из Local Storage
-        function getBalance() {
-            return parseInt(localStorage.getItem('balance')) || 0;
-        }
+<script>
+    // Функция для получения значения баланса из Local Storage
+    function getBalance() {
+        return parseInt(localStorage.getItem('balance')) || 0;
+    }
 
-        // Функция для установки значения баланса в Local Storage
-        function setBalance(value) {
-            localStorage.setItem('balance', value);
-        }
+    // Функция для установки значения баланса в Local Storage
+    function setBalance(value) {
+        localStorage.setItem('balance', value);
+    }
 
-        // Инициализация баланса при загрузке страницы
-        let balance = getBalance();
+    // Инициализация баланса при загрузке страницы
+    let balance = getBalance();
+    document.getElementById('balance').innerText = balance;
+
+    function increment() {
+        balance++;
         document.getElementById('balance').innerText = balance;
-
-        function increment() {
-            balance++;
-            document.getElementById('balance').innerText = balance;
-            setBalance(balance); // Сохранение обновленного баланса в Local Storage
-        }
-
-        // Привязка функции к кнопкам
-        document.querySelectorAll('.bead').forEach(button => {
-            button.addEventListener('click', increment);
-        });
-    </script>
+        setBalance(balance); // Сохранение обновленного баланса в Local Storage
+    }
+</script>
 </body>
 </html>
-
