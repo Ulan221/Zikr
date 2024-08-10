@@ -69,19 +69,20 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .ranking {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 250px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 100; /* Это обеспечит, что блок рейтинга будет поверх других элементов, если нужно */
+
+            .ranking {
+                position: absolute;
+                top: 35%;
+                left: 50%;
+                transform: translate(-50%, -50%); /* Центрирует блок по горизонтали и вертикали */
+                width: 250px;
+                background-color: white;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
 
         .ranking h2 {
             margin-top: 0;
