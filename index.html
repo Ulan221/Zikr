@@ -1,100 +1,166 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Zikr Counter</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-                background: linear-gradient(90deg, #ff2f00, #ffcc00);
-                overflow: hidden;
-            }
-
-            .container {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 30vh;
-            }
-
-            .title {
-                font-size: 2.5rem;
-                margin-top: 20px;
-                color: #333;
-            }
-
-            .balance {
-                font-size: 1.5rem;
-                margin-top: 20px;
-                color: #333;
-            }
-
-            .button-container {
-                position: absolute;
-                bottom: 20px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-            }
-
-            button {
-                font-size: 16px;
-                width: 250px;
-                height: 250px;
-                background-color: 	#011049;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                outline: none;
-            }
-
-            button:hover {
-                background-color: #011049;
-            }
-
-            button:active {
-                background-color: #011049;
-                transform: scale(0.95); /* Эффект нажатия */
-            }
-
-
-        </style>
-    </head>
-    <body>
-    <div class="container">
-        <h1 class="title">Zikr Counter</h1>
-        <p class="balance">Balance: <span id="balance">0</span></p>
-    </div>
-    <div class="button-container">
-        <button onclick="increment()">Subhanallah<br>Alhamdulillah<br>Allahu akbar</button>
-    </div>
-
-    <script>
-        function getBalance() {
-            return parseInt(localStorage.getItem('balance')) || 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zikr Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(90deg, #ff2f00, #ffcc00);
+            overflow: hidden;
         }
 
-        function setBalance(value) {
-            localStorage.setItem('balance', value);
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
         }
 
-        let balance = getBalance();
+        .title {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .balance {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            font-size: 16px;
+            width: 250px;
+            height: 250px;
+            background-color: #011049;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            outline: none;
+        }
+
+        button:hover {
+            background-color: #011049;
+        }
+
+        button:active {
+            background-color: #011049;
+            transform: scale(0.95); /* Эффект нажатия */
+        }
+
+        .ranking {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .ranking h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .ranking ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ranking li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ranking li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">Zikr Counter</h1>
+    <p class="balance">Score: <span id="balance">0</span></p>
+</div>
+<div class="button-container">
+    <button onclick="increment()">Subhanallah<br>Alhamdulillah<br>Allahu akbar</button>
+</div>
+<div class="ranking">
+    <h2>Top Players</h2>
+    <ul id="ranking-list">
+        <!-- Рейтинг игроков будет добавлен сюда -->
+    </ul>
+</div>
+
+<script>
+    async function fetchRanking() {
+        try {
+            const response = await fetch('/api/ranking');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const rankingData = await response.json();
+            updateRanking(rankingData);
+        } catch (error) {
+            console.error('Ошибка при получении данных рейтинга:', error);
+        }
+    }
+
+    function updateRanking(rankingData) {
+        const rankingList = document.getElementById('ranking-list');
+        rankingList.innerHTML = ''; // Очистить список
+
+        rankingData.forEach(player => {
+            const listItem = document.createElement('li');
+            listItem.innerText = `${player.username}: ${player.score}`;
+            rankingList.appendChild(listItem);
+        });
+    }
+
+    function getBalance() {
+        return parseInt(localStorage.getItem('balance')) || 0;
+    }
+
+    function setBalance(value) {
+        localStorage.setItem('balance', value);
+    }
+
+    let balance = getBalance();
+    document.getElementById('balance').innerText = balance;
+
+    function increment() {
+        balance++;
         document.getElementById('balance').innerText = balance;
+        setBalance(balance);
+    }
 
-        function increment() {
-            balance++;
-            document.getElementById('balance').innerText = balance;
-            setBalance(balance);
-        }
-    </script>
-    </body>
-    </html>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchRanking();
+        setInterval(fetchRanking, 60000); // Обновлять рейтинг каждую минуту
+    });
+</script>
+</body>
+</html>
