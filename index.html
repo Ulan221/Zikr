@@ -3,77 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zikr Counter</title>
+    <title>Zikr Clicker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            background: linear-gradient(90deg, #ff2f00, #ffcc00);
-            overflow: hidden;
-        }
-
-        .container {
-            display: flex;
+            background-color: #f0f0f0;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 30vh;
-        }
-
-        .title {
-            font-size: 2.5rem;
-            margin-top: 20px;
-            color: #333;
-        }
-
-        .balance {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            color: #333;
-        }
-
-        .button-container {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        button {
-            font-size: 16px;
-            width: 250px;
-            height: 250px;
-            background-color: #011049;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        button:hover {
-            background-color: #011049;
-        }
-
-        button:active {
-            background-color: #011049;
-            transform: scale(0.95); /* Эффект нажатия */
-            -webkit-tap-highlight-color: transparent;
         }
 
         .ranking {
             position: absolute;
-            top: 35%;
+            top: 10px;
             left: 50%;
-            transform: translate(-50%, -50%); /* Центрирует блок по горизонтали и вертикали */
-            width: 250px;
+            transform: translateX(-50%);
+            width: 300px;
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -85,6 +33,7 @@
             margin-top: 0;
             font-size: 1.5rem;
             color: #333;
+            text-align: center;
         }
 
         .ranking ul {
@@ -101,16 +50,38 @@
         .ranking li:last-child {
             border-bottom: none;
         }
+
+        .container {
+            text-align: center;
+            margin-top: 200px; /* Добавлено для смещения ниже */
+        }
+
+        .counter {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .click-button {
+            width: 200px;
+            height: 200px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .click-button:active {
+            background-color: #45a049;
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="title">Zikr Counter</h1>
-    <p class="balance">Score: <span id="balance">0</span></p>
-</div>
-<div class="button-container">
-    <button onclick="increment()">Subhanallah<br>Alhamdulillah<br>Allahu akbar</button>
-</div>
 <div class="ranking">
     <h2>Top Players</h2>
     <ul id="ranking-list">
@@ -118,17 +89,20 @@
     </ul>
 </div>
 
+<div class="container">
+    <div class="counter" id="counter">Clicks: 0</div>
+    <button class="click-button" id="clickButton">Click Me!</button>
+</div>
+
 <script>
-    function getUsername() {
-        let username = localStorage.getItem('username');
-        if (!username) {
-            username = prompt("Введите ваше имя:", "");
-            if (username) {
-                localStorage.setItem('username', username);
-            }
-        }
-        return username;
-    }
+    let counter = 0;
+    const counterDisplay = document.getElementById('counter');
+    const clickButton = document.getElementById('clickButton');
+
+    clickButton.addEventListener('click', () => {
+        counter++;
+        counterDisplay.textContent = `Clicks: ${counter}`;
+    });
 
     async function fetchRanking() {
         try {
@@ -139,13 +113,17 @@
             const rankingData = await response.json();
             updateRanking(rankingData);
         } catch (error) {
-            console.error('Ошибка при получении данных рейтинга:', error);
+            console.error('Error fetching ranking data:', error);
         }
     }
 
     function updateRanking(rankingData) {
         const rankingList = document.getElementById('ranking-list');
-        rankingList.innerHTML = ''; // Очистить список
+        rankingList.innerHTML = '';
+
+        if (rankingData.length === 0) {
+            rankingList.innerHTML = '<li>No players found</li>';
+        }
 
         rankingData.forEach(player => {
             const listItem = document.createElement('li');
@@ -154,25 +132,7 @@
         });
     }
 
-    function getBalance() {
-        return parseInt(localStorage.getItem('balance')) || 0;
-    }
-
-    function setBalance(value) {
-        localStorage.setItem('balance', value);
-    }
-
-    let balance = getBalance();
-    document.getElementById('balance').innerText = balance;
-
-    function increment() {
-        balance++;
-        document.getElementById('balance').innerText = balance;
-        setBalance(balance);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-        getUsername();  // Получаем имя пользователя
         fetchRanking();
         setInterval(fetchRanking, 60000); // Обновлять рейтинг каждую минуту
     });
