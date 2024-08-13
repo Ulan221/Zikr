@@ -97,13 +97,38 @@
 </div>
 
 <script>
-    let counter = 0;
+    let counter = parseInt(localStorage.getItem('counter')) || 0; // Загрузка значения счётчика из Local Storage
     const counterDisplay = document.getElementById('counter');
     const clickButton = document.getElementById('clickButton');
 
+    // Обновление отображения счётчика
+    function updateCounterDisplay() {
+        counterDisplay.textContent = `Clicks: ${counter}`;
+    }
+
     clickButton.addEventListener('click', () => {
         counter++;
-        counterDisplay.textContent = `Clicks: ${counter}`;
+        localStorage.setItem('counter', counter); // Сохранение значения счётчика в Local Storage
+        updateCounterDisplay();
+
+        // Отправка счёта на сервер
+        fetch('/api/updateScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: 'Улан',  // Здесь можно использовать реальное имя пользователя
+                score: counter
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Score updated:', data);
+            })
+            .catch(error => {
+                console.error('Error updating score:', error);
+            });
     });
 
     async function fetchRanking() {
@@ -113,6 +138,7 @@
                 throw new Error('Network response was not ok');
             }
             const rankingData = await response.json();
+            console.log('Fetched ranking data:', rankingData); //
             updateRanking(rankingData);
         } catch (error) {
             console.error('Error fetching ranking data:', error);
@@ -135,6 +161,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        updateCounterDisplay(); // Отображение сохранённого значения счётчика при загрузке страницы
         fetchRanking();
         setInterval(fetchRanking, 60000); // Обновлять рейтинг каждую минуту
     });
