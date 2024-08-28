@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username') || 'User';
+            document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
+        };
+    </script>
 </head>
 <body>
-<h1>Добро пожаловать, <span th:text="${username}">User</span>!</h1>
+    <h1 id="welcome-message">Добро пожаловать, User!</h1>
 </body>
 </html>
