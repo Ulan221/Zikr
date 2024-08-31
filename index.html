@@ -34,31 +34,27 @@
             text-decoration: none;
             color: #fff;
             background-color: #007bff;
-            border-radius: 5px;
+            border-radius: 75px;
             text-align: center;
             transition: background-color 0.3s ease;
+            /* Установка высоты кнопок */
+            height: 50px;
+            line-height: 50px; /* Центрирование текста по вертикали */
         }
         .button-container a:hover {
-            background-color: #0056b3;
+            background-color: black;
         }
         /* Мобильное отображение */
         @media (max-width: 600px) {
             .button-container a {
-                padding: 10px;
-                font-size: 14px;
-                margin: 3px;
+                padding: 20px; /* Увеличиваем отступы для кнопок */
+                font-size: 20px; /* Увеличиваем размер шрифта кнопок */
+                margin: 10px; /* Увеличиваем отступы между кнопками */
+                height: 60px; /* Увеличиваем высоту кнопок на мобильных устройствах */
+                line-height: 60px; /* Центрируем текст по вертикали */
             }
         }
     </style>
-    <script>
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const username = urlParams.get('username') || 'User';
-            const chatId = urlParams.get('chatId') || '0';
-            document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
-            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}`;
-        };
-    </script>
 </head>
 <body>
     <h1 id="welcome-message">Добро пожаловать, User!</h1>
