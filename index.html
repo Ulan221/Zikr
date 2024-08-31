@@ -59,7 +59,7 @@
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const username = urlParams.get('username') || 'User';
-            const balance = (urlParams.get('chatId') || '0') / 1111;
+            const balance = Math.floor((parseInt(chatId) || 0) / 111111);
             document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
             document.getElementById('account-balance').textContent = `На вашем счету ${balance}`;
         };
