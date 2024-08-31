@@ -29,7 +29,7 @@
         .button-container a {
             flex: 1; /* Каждая кнопка занимает равную часть доступного пространства */
             padding: 15px;
-            font-size: 36px;
+            font-size: 16px;
             margin: 5px;
             text-decoration: none;
             color: #fff;
@@ -48,21 +48,30 @@
         @media (max-width: 600px) {
             .button-container a {
                 padding: 20px; /* Увеличиваем отступы для кнопок */
-                font-size: 30px; /* Увеличиваем размер шрифта кнопок */
+                font-size: 20px; /* Увеличиваем размер шрифта кнопок */
                 margin: 10px; /* Увеличиваем отступы между кнопками */
                 height: 60px; /* Увеличиваем высоту кнопок на мобильных устройствах */
                 line-height: 60px; /* Центрируем текст по вертикали */
             }
         }
     </style>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username') || 'User';
+            const chatId = urlParams.get('chatId') || '0';
+            document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
+            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}`;
+        };
+    </script>
 </head>
 <body>
-<h1 id="welcome-message">Добро пожаловать, User!</h1>
-<h2 id="account-balance">На вашем счету 0!</h2>
-<div class="button-container">
-    <a href="/home">Home</a>
-    <a href="/leaderboard">Leaderboard</a>
-    <a href="/friends">Friends</a>
-</div>
+    <h1 id="welcome-message">Добро пожаловать, User!</h1>
+    <h2 id="account-balance">На вашем счету 0!</h2>
+    <div class="button-container">
+        <a href="/home">Home</a>
+        <a href="/leaderboard">Leaderboard</a>
+        <a href="/friends">Friends</a>
+    </div>
 </body>
 </html>
