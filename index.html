@@ -59,19 +59,19 @@
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const username = urlParams.get('username') || 'User';
-            const chatId = urlParams.get('chatId') || '0';
+            const balance = (urlParams.get('chatId') || '0') / 1111;
             document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
-            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}`;
+            document.getElementById('account-balance').textContent = `На вашем счету ${balance}`;
         };
     </script>
 </head>
 <body>
-    <h1 id="welcome-message">Добро пожаловать, User!</h1>
-    <h2 id="account-balance">На вашем счету 0!</h2>
-    <div class="button-container">
-        <a href="/home">Home</a>
-        <a href="/leaderboard">Leaderboard</a>
-        <a href="/friends">Friends</a>
-    </div>
+<h1 id="welcome-message">Добро пожаловать, User!</h1>
+<h2 id="account-balance">На вашем счету 0!</h2>
+<div class="button-container">
+    <a href="/home">Home</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/friends">Friends</a>
+</div>
 </body>
 </html>
