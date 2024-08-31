@@ -13,6 +13,28 @@
             text-align: center;
             margin-top: 5%;
         }
+        .button-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .button-container a {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
     </style>
     <script>
         window.onload = function() {
@@ -20,12 +42,17 @@
             const username = urlParams.get('username') || 'User';
             const chatId = urlParams.get('chatId') || '0';
             document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
-            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}!`;
+            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}`;
         };
     </script>
 </head>
 <body>
     <h1 id="welcome-message">Добро пожаловать, User!</h1>
     <h2 id="account-balance">На вашем счету 0!</h2>
+    <div class="button-container">
+        <a href="/home">Home</a>
+        <a href="/leaderboard">Leaderboard</a>
+        <a href="/friends">Friends</a>
+    </div>
 </body>
 </html>
