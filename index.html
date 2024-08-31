@@ -8,6 +8,8 @@
             background-color: #f0f8ff; /* Светло-голубой фон */
             font-family: Arial, sans-serif;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
         h1, h2 {
             text-align: center;
@@ -17,23 +19,35 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            text-align: center;
             background-color: #f0f8ff;
             padding: 10px;
+            box-sizing: border-box; /* Учитывать padding в ширине */
             border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
         }
         .button-container a {
-            padding: 10px 20px;
+            flex: 1; /* Каждая кнопка занимает равную часть доступного пространства */
+            padding: 15px;
             font-size: 16px;
             margin: 5px;
             text-decoration: none;
             color: #fff;
             background-color: #007bff;
             border-radius: 5px;
+            text-align: center;
             transition: background-color 0.3s ease;
         }
         .button-container a:hover {
             background-color: #0056b3;
+        }
+        /* Мобильное отображение */
+        @media (max-width: 600px) {
+            .button-container a {
+                padding: 10px;
+                font-size: 14px;
+                margin: 3px;
+            }
         }
     </style>
     <script>
