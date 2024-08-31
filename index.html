@@ -71,7 +71,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const username = urlParams.get('username') || 'User';
             const chatId = urlParams.get('chatId') || '0';
-            const balance = Math.floor((parseInt(chatId) || 0) / 1111);
+            const balance = Math.floor((parseInt(chatId) || 0) / 9999);
             document.getElementById('user-name').textContent = `${username}`;
             document.getElementById('welcome-message').textContent = `Welcome to Hunky-Dory`;
             document.getElementById('account-balance').textContent = `Your tokens: ${balance}`;
@@ -82,11 +82,10 @@
 <h2 id="user-name">Username</h2>
 <h1 id="welcome-message">Добро пожаловать, User!</h1>
 <h2 id="account-balance">На вашем счету 0!</h2>
-
 <div class="button-container">
-    <a href="/"><i class="fas fa-home"></i> main</a>
-    <a href="/tasks"><i class="fas fa-tasks"></i> tasks</a>
-    <a href="/wallet"><i class="fas fa-wallet"></i> wallet</a>
+    <a href="/"><i class="fas fa-home"></i> HOME</a>
+    <a href="/tasks"><i class="fas fa-tasks"></i> TASKS</a>
+    <a href="/wallet"><i class="fas fa-wallet"></i> WALLET</a>
 </div>
 </body>
 </html>
