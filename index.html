@@ -11,14 +11,9 @@
             margin: 0;
             padding: 0;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             margin-top: 5%;
-            font-size: 3em; /* Увеличиваем размер шрифта для h1 */
-        }
-        h2 {
-            text-align: center;
-            font-size: 2em; /* Увеличиваем размер шрифта для h2 */
         }
         .button-container {
             position: fixed;
@@ -33,33 +28,45 @@
         }
         .button-container a {
             flex: 1; /* Каждая кнопка занимает равную часть доступного пространства */
-            padding: 20px; /* Увеличиваем отступы для кнопок */
-            font-size: 20px; /* Увеличиваем размер шрифта кнопок */
-            margin: 10px; /* Увеличиваем отступы между кнопками */
+            padding: 15px;
+            font-size: 16px;
+            margin: 5px;
             text-decoration: none;
             color: #fff;
             background-color: #007bff;
-            border-radius: 75px;
+            border-radius: 5px;
             text-align: center;
             transition: background-color 0.3s ease;
         }
         .button-container a:hover {
-            background-color: black;
+            background-color: #0056b3;
         }
         /* Мобильное отображение */
         @media (max-width: 600px) {
             .button-container a {
-                padding: 20px; /* Увеличиваем отступы для кнопок */
-                font-size: 20px; /* Увеличиваем размер шрифта кнопок */
-                margin: 10px; /* Увеличиваем отступы между кнопками */
-            }
-            h1 {
-                font-size: 2.5em; /* Уменьшаем размер шрифта для h1 на мобильных устройствах */
-            }
-            h2 {
-                font-size: 1.5em; /* Уменьшаем размер шрифта для h2 на мобильных устройствах */
+                padding: 10px;
+                font-size: 14px;
+                margin: 3px;
             }
         }
     </style>
     <script>
-        
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username') || 'User';
+            const chatId = urlParams.get('chatId') || '0';
+            document.getElementById('welcome-message').textContent = `Добро пожаловать, ${username}!`;
+            document.getElementById('account-balance').textContent = `На вашем счету ${chatId}`;
+        };
+    </script>
+</head>
+<body>
+    <h1 id="welcome-message">Добро пожаловать, User!</h1>
+    <h2 id="account-balance">На вашем счету 0!</h2>
+    <div class="button-container">
+        <a href="/home">Home</a>
+        <a href="/leaderboard">Leaderboard</a>
+        <a href="/friends">Friends</a>
+    </div>
+</body>
+</html>
