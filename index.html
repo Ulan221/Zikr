@@ -61,7 +61,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const username = urlParams.get('username') || 'User';
             const chatId = urlParams.get('chatId') || '0';
-            const balance = Math.floor((parseInt(chatId) || 0) / 111111);
+            const balance = Math.floor((parseInt(chatId) || 0) / 9999);
             document.getElementById('welcome-message').textContent = `Hey, ${username}!`;
             document.getElementById('account-balance').textContent = `Your balance : ${balance}` ;
         };
